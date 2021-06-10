@@ -25,10 +25,18 @@ jobs:
         GOOS: linux
         GOARCH: amd64
       run: go build -v -o /tmp/build/linux/sshcheck cmd/main.go
+
+    - name: Build-rpi
+      env:
+        GOOS: linux
+        GOARCH: arm
+        GOARM: 5
+      run: go build -v -o /tmp/build/rpi/sshcheck cmd/main.go
     
     - name: Create Artifacts
       run: |
         zip --junk-paths sshcheck-linux.zip /tmp/build/linux/sshcheck
+        zip --junk-paths sshcheck-rpi.zip /tmp/build/rpi/shiba
     
     - name: Create release
       id: create_release
@@ -50,4 +58,15 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./sshcheck-linux.zip
         asset_name: sshcheck-linux.zip
+        asset_content_type: application/zip
+
+    - name: Upload rpi assets
+      id: upload_release_asset_rpi
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./sshcheck-rpi.zip
+        asset_name: sshcheck-rpi.zip
         asset_content_type: application/zip
