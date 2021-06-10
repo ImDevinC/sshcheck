@@ -24,7 +24,7 @@ jobs:
       env:
         GOOS: linux
         GOARCH: amd64
-      run: go build -v -o /tmp/build/linux/sshcheck main.go
+      run: go build -v -o /tmp/build/linux/sshcheck cmd/main.go
     
     - name: Create Artifacts
       run: |
