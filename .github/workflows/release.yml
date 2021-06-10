@@ -36,7 +36,7 @@ jobs:
     - name: Create Artifacts
       run: |
         zip --junk-paths sshcheck-linux.zip /tmp/build/linux/sshcheck
-        zip --junk-paths sshcheck-rpi.zip /tmp/build/rpi/shiba
+        zip --junk-paths sshcheck-rpi.zip /tmp/build/rpi/sshcheck
     
     - name: Create release
       id: create_release
